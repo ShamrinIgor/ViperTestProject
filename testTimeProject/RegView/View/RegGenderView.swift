@@ -108,9 +108,12 @@ class RegGenderView: RegView ,RegViewProtocol {
     func makeContsraint() {
         maleButton.snp.makeConstraints() { (make) -> Void in
             make.top.equalToSuperview().offset(75)
+//            make.centerY.equalToSuperview().offset(-50)
+            make.top.lessThanOrEqualToSuperview().offset(75)
             make.left.equalToSuperview().offset(20)
             make.right.equalTo(backgroundView.snp.centerX).offset(-20)
-            make.height.equalTo(250)
+            make.bottom.equalTo(otherButton.snp.top).offset(-20)
+//            make.height.equalTo(250)
         }
         
         maleHatLabel.snp.makeConstraints() { (make) -> Void in
@@ -122,9 +125,11 @@ class RegGenderView: RegView ,RegViewProtocol {
         
         femaleButton.snp.makeConstraints() { (make) -> Void in
             make.top.equalToSuperview().offset(75)
+            //            make.centerY.equalToSuperview().offset(-50)
             make.left.equalTo(backgroundView.snp.centerX).offset(20)
             make.right.equalToSuperview().offset(-20)
-            make.height.equalTo(250)
+            make.bottom.equalTo(otherButton.snp.top).offset(-20)
+            //            make.height.equalTo(250)
         }
         
         femaleHatLabel.snp.makeConstraints() { (make) -> Void in
@@ -135,7 +140,8 @@ class RegGenderView: RegView ,RegViewProtocol {
         }
         
         otherButton.snp.makeConstraints() { (make) -> Void in
-            make.top.equalTo(maleButton.snp.bottom).offset(20)
+//            make.top.equalTo(maleButton.snp.bottom).offset(20)
+            make.bottom.equalTo(nextButton.snp.top).offset(-20)
             make.height.equalTo(nextButton.snp.height)
             make.width.equalTo(nextButton.snp.width)
             make.centerX.equalToSuperview()

@@ -154,13 +154,12 @@ class RegView: UIViewController
 //            break
 //        }
         
-        
-        view.addSubview(backgroundView)
+        view.addSubview(progressBarView)
         view.addSubview(iconImageView)
         view.addSubview(mainLabel)
         view.addSubview(progressLabel)
+        view.addSubview(backgroundView)
         view.addSubview(nextButton)
-        view.addSubview(progressBarView)
         
         nextButton.addSubview(arrowImageView)
         nextButton.addTarget(self, action: #selector(nextButtonPressed), for: .touchUpInside)
@@ -170,17 +169,12 @@ class RegView: UIViewController
     
     
     fileprivate func makeConstraints() {
-        backgroundView.snp.makeConstraints() { (make) -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(185)
-            make.width.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.centerX.equalToSuperview()
-        }
         
         mainLabel.snp.makeConstraints() { (make) -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(130)
             make.right.equalToSuperview()
+            make.height.equalTo(50)
         }
         
         iconImageView.snp.makeConstraints() { (make) -> Void in
@@ -193,6 +187,22 @@ class RegView: UIViewController
             make.top.equalTo(mainLabel.snp.bottom).offset(15)
             make.left.equalTo(mainLabel.snp.left)
             make.right.equalToSuperview()
+            make.height.equalTo(35)
+        }
+        
+        progressBarView.snp.makeConstraints() { (make) -> Void in
+            make.top.equalTo(progressLabel.snp.bottom).offset(30)
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
+            make.height.equalTo(10)
+        }
+        
+        backgroundView.snp.makeConstraints() { (make) -> Void in
+            make.top.equalTo(progressBarView.snp.bottom).offset(35)
+            make.width.equalToSuperview()
+            make.bottom.equalToSuperview().offset(13)
+            make.centerX.equalToSuperview()
         }
         
         nextButton.snp.makeConstraints() { (make) -> Void in
@@ -209,13 +219,6 @@ class RegView: UIViewController
 
         }
 
-        progressBarView.snp.makeConstraints() { (make) -> Void in
-            make.top.equalTo(progressLabel.snp.bottom).offset(45)
-            make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
-            make.height.equalTo(10)
-        }
     }
     
     
@@ -223,10 +226,15 @@ class RegView: UIViewController
         guard let userInfo = notification.userInfo else{return}
         guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else{return}
         let keyboardFrame = keyboardSize.cgRectValue.height
+        
+        let window = UIApplication.shared.keyWindow
+        let bottomPadding = window?.safeAreaInsets.bottom
+        
         if !self.keyboardIsOpen {
-            self.nextButton.frame.origin.y -= keyboardFrame
+            self.nextButton.frame.origin.y -= (keyboardFrame - bottomPadding!)
             self.keyboardIsOpen = true
         }
+        
 
     }
     
@@ -234,8 +242,12 @@ class RegView: UIViewController
         guard let userInfo = notification.userInfo else{return}
         guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else{return}
         let keyboardFrame = keyboardSize.cgRectValue.height
+        
+        let window = UIApplication.shared.keyWindow
+        let bottomPadding = window?.safeAreaInsets.bottom
+        
         if self.keyboardIsOpen {
-            self.nextButton.frame.origin.y +=  keyboardFrame
+            self.nextButton.frame.origin.y += (keyboardFrame - bottomPadding!)
             self.keyboardIsOpen = false
         }
         

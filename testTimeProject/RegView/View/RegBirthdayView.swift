@@ -33,7 +33,8 @@ class RegBirthdayView: RegView, RegViewProtocol {
     
     func makeConstaints() {
         datePicker.snp.makeConstraints() { (make) -> Void in
-            make.top.equalToSuperview().offset(100)
+//            make.top.equalToSuperview().offset(100)
+            make.centerY.equalToSuperview().offset(-50)
             make.left.equalToSuperview().offset(50)
             make.right.equalToSuperview().offset(-50)
         }

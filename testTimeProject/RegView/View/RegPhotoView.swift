@@ -48,10 +48,10 @@ class RegPhotoView: RegView, RegViewProtocol {
     
     func makeConstraints() {
         photoButton.snp.makeConstraints() { (make) -> Void in
-            make.top.equalToSuperview().offset(75)
+            make.top.equalToSuperview().offset(40)
             make.left.equalToSuperview().offset(85)
             make.right.equalToSuperview().offset(-85)
-            make.height.equalTo(350)
+            make.height.equalToSuperview().multipliedBy(0.6)
         }
         
         cameraImageView.snp.makeConstraints() { (make) -> Void in
